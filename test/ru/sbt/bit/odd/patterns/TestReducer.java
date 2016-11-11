@@ -2,27 +2,53 @@ package ru.sbt.bit.odd.patterns;
 
 import org.junit.Test;
 import ru.sbt.bit.ood.patterns.Reducer;
+import ru.sbt.bit.ood.patterns.StrategyMultiply;
+import ru.sbt.bit.ood.patterns.StrategySum;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestReducer {
 
     @Test
-    public void testReduceWorks() {
+    public void testReduceWorksAdd() {
         int[] arr = { -1, 2, 4, 0, 5 };
-        assertEquals( 10, new Reducer().reduce(arr));
+        StrategySum myStrategy = new StrategySum();
+        assertEquals( 10, new Reducer().reduce(arr, myStrategy));
+    }
+
+    @Test
+    public void testReduceWorksMulZero() {
+        int[] arr = { -1, 2, 4, 0, 5 };
+        StrategyMultiply myStrategy = new StrategyMultiply();
+        assertEquals( 0, new Reducer().reduce(arr, myStrategy));
+    }
+
+    @Test
+    public void testReduceWorksMul() {
+        int[] arr = { -1, 2, 4, 5 };
+        StrategyMultiply myStrategy = new StrategyMultiply();
+        assertEquals( -40, new Reducer().reduce(arr, myStrategy));
     }
 
     @Test
     public void testReduceWorksForTwoElements() {
         int[] arr = { 1, 2 };
-        assertEquals( 3, new Reducer().reduce(arr));
+        StrategySum myStrategy = new StrategySum();
+        assertEquals( 3, new Reducer().reduce(arr, myStrategy));
     }
 
     @Test
-    public void testReduceWorksForOneElement() {
+    public void testReduceWorksForOneElementAdd() {
         int[] arr = { -1 };
-        assertEquals( -1, new Reducer().reduce(arr));
+        StrategySum myStrategy = new StrategySum();
+        assertEquals( -1, new Reducer().reduce(arr, myStrategy));
+    }
+
+    @Test
+    public void testReduceWorksForOneElementMul() {
+        int[] arr = { -1 };
+        StrategyMultiply myStrategy = new StrategyMultiply();
+        assertEquals( -1, new Reducer().reduce(arr, myStrategy));
     }
 
 }
